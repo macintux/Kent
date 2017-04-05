@@ -1,0 +1,57 @@
+6> S1 = palin_server:start().
+<0.82.0>
+7> S2 = palin_server:start().
+<0.84.0>
+8> S3 = palin_server:start().
+<0.86.0>
+10> G = palin_gateway:start([S1, S2, S3]).
+<0.93.0>
+11> S1 ! {check, self(), "ABba"}.
+{check,<0.56.0>,"ABba"}
+12> flush().
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+13> G ! {check, self(), "ABba", [round_robin, debug]}.
+{check,<0.56.0>,"ABba",[round_robin,debug]}
+14> flush().
+Shell got {debug,"ABba",[<0.82.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+15> G ! {check, self(), "ABba", [round_robin, debug]}.
+{check,<0.56.0>,"ABba",[round_robin,debug]}
+16> flush().
+Shell got {debug,"ABba",[<0.84.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+17> G ! {check, self(), "ABba", [round_robin, debug]}.
+{check,<0.56.0>,"ABba",[round_robin,debug]}
+18> flush().
+Shell got {debug,"ABba",[<0.86.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+19> G ! {check, self(), "ABba", [round_robin, debug]}.
+{check,<0.56.0>,"ABba",[round_robin,debug]}
+20> flush().
+Shell got {debug,"ABba",[<0.82.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+21> G ! {check, self(), "ABba", [all, debug]}.
+{check,<0.56.0>,"ABba",[all,debug]}
+22> flush().
+Shell got {debug,"ABba",[<0.82.0>,<0.84.0>,<0.86.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+23> G ! {check, self(), "ABba", [random, debug]}.
+{check,<0.56.0>,"ABba",[random,debug]}
+24> flush().
+Shell got {debug,"ABba",[<0.82.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
+25> G ! {check, self(), "ABba", [random, debug]}.
+{check,<0.56.0>,"ABba",[random,debug]}
+26> flush().
+Shell got {debug,"ABba",[<0.86.0>]}
+Shell got {result,"ABba","\"ABba\" is a palindrome"}
+ok
